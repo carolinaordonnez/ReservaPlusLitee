@@ -1,6 +1,6 @@
 /********** Template CSS **********/
 :root {
-    --primary: #86B817;
+    --primary: hsl(0, 78%, 41%);
     --secondary: #FE8800;
     --light: #F5F5F5;
     --dark: #14141F;
@@ -107,7 +107,10 @@
 
 .sticky-top.navbar-light .navbar-brand img {
     max-height: 45px;
+    max-height: 100%;
+    object-fit: contain; /* Evitar que la imagen se deforme */
 }
+
 
 @media (max-width: 991.98px) {
     .sticky-top.navbar-light {
