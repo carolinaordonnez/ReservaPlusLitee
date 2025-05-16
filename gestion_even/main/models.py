@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Cart(models.Model):
     eventName = models.CharField(max_length=255)
-    price =  models.DecimalField(max_digits=8, decimal_places=2,null=True)
+    price = models.IntegerField(null=True)
     quantity = models.IntegerField()
     start_Date = models.DateTimeField()
     Date_Added = models.DateTimeField(auto_now_add=True)

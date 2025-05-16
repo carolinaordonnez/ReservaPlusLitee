@@ -29,6 +29,7 @@ INSTALLED_APPS = [
     'main',
     'usersaccounts',
     'CheckOut',
+    'django.contrib.humanize',
     
     # 3rd party apps
     'crispy_forms',

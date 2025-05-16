@@ -9,8 +9,8 @@ from django.dispatch import receiver
 class EventCategory(models.Model):
     name = models.CharField(max_length=255, unique=True)
     code = models.CharField(max_length=6, unique=True)
-    # image = models.ImageField(upload_to='event_category/')
-    # priority = models.IntegerField(unique=True)
+    #image = models.ImageField(upload_to='event_category/')
+    #priority = models.IntegerField(unique=True)
     created_user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='created_user')
     updated_user = models.ForeignKey('auth.User', on_delete=models.CASCADE, related_name='updated_user')
     created_date = models.DateField(auto_now_add=True)
@@ -41,8 +41,8 @@ class Ticket(models.Model):
     # event = models.OneToOneField(Event, on_delete=models.CASCADE, related_name='ticket_id')
     name = models.CharField(max_length=100)
     description = models.TextField(max_length=300)
-    # idevent is foreign key
-    price = models.DecimalField(max_digits=8, decimal_places=2)
+    # CClave externa
+    price = models.IntegerField(null=True)
     # Add other 
     nbr_ticket = models.IntegerField(default=0)
     created_date = models.DateTimeField(default=timezone.now, verbose_name="Created Date (Morocco)")
@@ -235,7 +235,7 @@ class UserCoin(models.Model):
 class Payments(models.Model):
     username = models.CharField(max_length=50)
     Holder = models.CharField(max_length=50)
-    eventName = models.CharField(max_length=70)
+    eventName = models.CharField(max_length=100)
     paymentDate = models.DateField(auto_now_add=True)
     TicketNumber = models.CharField(max_length=60)
     Quantity = models.IntegerField()

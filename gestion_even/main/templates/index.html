@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
+{% load humanize %}
 
 
 <!-- Package Start -->
@@ -8,14 +9,14 @@
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Events</h6>
+                <h6 class="section-title bg-white text-center text-primary px-3">Eventos</h6>
                 <h1 class="mb-5">Proximos Eventos</h1>
             </div>
             
                 <div id="events-container">
                     <div class="row g-4 justify-content-center">
-                        {% for eve in events %}  <!--Iterar con la variable --!
-                            <!-- Here We need to check the qyantity of -->
+                        {% for eve in events %}  <!--Iterar con la variable -->
+                            <!-- Comprobar cantidad de  -->
                             <div class="col-lg-4 col-md-6 wow fadeInUp event-item" data-wow-delay="0.1s">
                                 <div class="package-item">
                                     <div class="overflow-hidden">
@@ -26,7 +27,7 @@
                                         <small class="flex-fill text-center border-end py-2"><i class="fa fa-calendar-alt text-primary me-2"></i>{{eve.start_date}}</small>
                                     </div>
                                     <div class="text-center p-4">
-                                        <h3 class="mb-0">{{eve.price}} DH</h3>
+                                       <h3 class="mb-0">{{ eve.price}} COP</h3>
                                         <div class="mb-3">
                                             <small class="fa fa-star text-primary"></small>
                                             <small class="fa fa-star text-primary"></small>
@@ -36,12 +37,12 @@
                                         </div>
                                         <p>{{ eve.name }}</p>
                                         <div class="d-flex justify-content-center mb-2" id="blur">
-                                            <a href="#" onclick="toggleBlur('{{ eve.name }}','{{eve.description|escapejs}}'); return false;" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Event Details</a>
+                                            <a href="#" onclick="toggleBlur('{{ eve.name }}','{{eve.description|escapejs}}'); return false;" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Detalles Evento</a>
                                             <!--<button data-event="{{ eve.id }}" data-action="add" onclick="addToCart('{{ eve.id }}')" class="btn btn-sm btn-primary px-3  border-end">Add To Cart</button>-->
                                             {% if user.is_authenticated %}
-                                            <button class="btn-cart btn-sm btn-primary px-3  border-end" data-event-id="{{ eve.id }}" id="addToCartBtn" style="color: white;">Add To Cart</button>
+                                            <button class="btn-cart btn-sm btn-primary px-3  border-end" data-event-id="{{ eve.id }}" id="addToCartBtn" style="color: white;">Reserva ya</button>
                                             {% endif %}
-                                            <a href="{% url 'Check' eve.id %}" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Get your ticket</a>
+                                            <a href="{% url 'Check' eve.id %}" class="btn btn-sm btn-primary px-3" style="border-radius: 0 30px 30px 0;">Compra aquí</a>
                                         </div>
                                     </div>
                                 </div>
@@ -52,15 +53,15 @@
         </div>
     </div>
 
-    <!-- Package End -->
+    <!-- Fin-->
 
 
-    <!-- Process Start -->
+    <!-- Inicio de Proceso-->
     <div class="container-xxl py-5">
         <div class="container">
             <div class="text-center pb-4 wow fadeInUp" data-wow-delay="0.1s">
-                <h6 class="section-title bg-white text-center text-primary px-3">Get your Ticket</h6>
-                <h1 class="mb-5">2 Easy Steps</h1>
+                <h6 class="section-title bg-white text-center text-primary px-3">Comprar Aquí</h6>
+                <h1 class="mb-5">2 sencillos pasos</h1>
             </div>
             <div class="row gy-5 gx-4 justify-content-center">
                 <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.1s">
@@ -68,10 +69,10 @@
                         <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle position-absolute top-0 start-50 translate-middle shadow" style="width: 100px; height: 100px;">
                             <i class="fa fa-globe fa-3x text-white"></i>
                         </div>
-                        <h5 class="mt-4">Choose An Event</h5>
+                        <h5 class="mt-4">Elegir Evento</h5>
                         <hr class="w-25 mx-auto bg-primary mb-1">
                         <hr class="w-50 mx-auto bg-primary mt-0">
-                        <p class="mb-0">Browse through our extensive collection of exciting events and discover a world of possibilities. Explore the event listings, read detailed descriptions, check out the dates and venues</p>
+                        <p class="mb-0">Explora nuestra amplia colección de emocionantes eventos y descubre un mundo de posibilidades. Explora la lista de eventos, lee descripciones detalladas y consulta las fechas y los lugares.</p>
                     </div>
                 </div>
                 <div class="col-lg-4 col-sm-6 text-center pt-4 wow fadeInUp" data-wow-delay="0.3s">
@@ -79,10 +80,10 @@
                         <div class="d-inline-flex align-items-center justify-content-center bg-primary rounded-circle position-absolute top-0 start-50 translate-middle shadow" style="width: 100px; height: 100px;">
                             <i class="fa fa-dollar-sign fa-3x text-white"></i>
                         </div>
-                        <h5 class="mt-4">Pay Online</h5>
+                        <h5 class="mt-4">Pago</h5>
                         <hr class="w-25 mx-auto bg-primary mb-1">
                         <hr class="w-50 mx-auto bg-primary mt-0">
-                        <p class="mb-0">Once you've selected your desired event, purchasing tickets is a breeze. Our secure online payment system allows you to conveniently complete your transaction from the comfort of your own home.</p>
+                        <p class="mb-0">"Una vez que hayas seleccionado el evento que deseas, comprar entradas es muy sencillo. Nuestro sistema de pago seguro en línea te dirige a WhatsApp para facilitar el proceso de pago de manera rápida y segura.</p>
                     </div>
                 </div>
             </div>
@@ -100,8 +101,8 @@
     <div class="container-xxl py-5 wow fadeInUp" data-wow-delay="0.1s" id="Top">
         <div class="container">
             <div class="text-center">
-                <h6 class="section-title bg-white text-center text-primary px-3">Satatistics</h6>
-                <h1 class="mb-5">Our Top selling Events</h1>
+                <h6 class="section-title bg-white text-center text-primary px-3">Top eventos</h6>
+                <h1 class="mb-5">Nuestros eventos más vendidos</h1>
             </div>
             <div class="owl-carousel testimonial-carousel position-relative">
                 {% for ev in event %}
