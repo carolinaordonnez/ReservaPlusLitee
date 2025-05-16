@@ -137,18 +137,18 @@
     <div class="container py-5">
         <div class="row g-5">
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-white mb-3">EventTick</h4>
-                <a class="btn btn-link" href="">About Us</a>
-                <a class="btn btn-link" href="">Contact Us</a>
-                <a class="btn btn-link" href="">Privacy Policy</a>
-                <a class="btn btn-link" href="">Terms & Condition</a>
-                <a class="btn btn-link" href="">FAQs & Help</a>
+                <h4 class="text-white mb-3">ReservaPLusLite</h4>
+                <a class="btn btn-link" href="">Acerca de nosotros</a>
+                <a class="btn btn-link" href="">Contactanos</a>
+                <a class="btn btn-link" href="">Politica y Privacidad</a>
+                <a class="btn btn-link" href="">Terminos y condiciones</a>
+                <a class="btn btn-link" href="">Ayuda</a>
             </div>
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-white mb-3">Contact</h4>
+                <h4 class="text-white mb-3">Contacto</h4>
                 <p class="mb-2"><i class="fa fa-map-marker-alt me-3"></i>123 Street, Rabat, Maroc</p>
                 <p class="mb-2"><i class="fa fa-phone-alt me-3"></i>+212 654 5755 60</p>
-                <p class="mb-2"><i class="fa fa-envelope me-3"></i>EvenTick@Events.com</p>
+                <p class="mb-2"><i class="fa fa-envelope me-3"></i>reservapluslite@events.com</p>
                 <div class="d-flex pt-2">
                     <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-twitter"></i></a>
                     <a class="btn btn-outline-light btn-social" href=""><i class="fab fa-facebook-f"></i></a>
@@ -157,13 +157,13 @@
                 </div>
             </div>
             <div class="col-lg-3 col-md-6">
-                <h4 class="text-white mb-3">Thank You!</h4>
-                <p>We appreciate your support and feedback.</p>
+                <h4 class="text-white mb-3">Muchas Gracias!</h4>
+                <p>Agradecemos su apoyo y comentarios..</p>
                 <form action="{% url 'feedback' %}" method="post">
                     {% csrf_token %}
                     <div class="position-relative mx-auto" style="max-width: 400px;">
-                      <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text" placeholder="Any feedbacks?" name="feedback">
-                      <button type="submit" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">Send</button>
+                      <input class="form-control border-primary w-100 py-3 ps-4 pe-5" type="text" placeholder="¿Alguna opinión?" name="feedback">
+                      <button type="submit" class="btn btn-primary py-2 position-absolute top-0 end-0 mt-2 me-2">Enviar</button>
                     </div>
                   </form>
                   
@@ -174,13 +174,13 @@
         <div class="copyright">
             <div class="row">
                 <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-                    &copy; <a class="border-bottom" href="#">EvenTick</a>, All Right Reserved.
+                    &copy; <a class="border-bottom" href="#">ReservaPlusLite</a>, Todos los derechos reservados.
                 </div>
                 <div class="col-md-6 text-center text-md-end">
                     <div class="footer-menu">
                         <a href="">Home</a>
                         <a href="">Cookies</a>
-                        <a href="">Help</a>
+                        <a href="">Ayuda</a>
                         <a href="">FQAs</a>
                     </div>
                 </div>
@@ -199,5 +199,35 @@
     }
     "{%endif%}"
   </script>
+
+<script>
+  $(document).ready(function() {
+    $('.btn-cart').click(function(e) {
+      e.preventDefault();
+
+      const eventId = $(this).data('event-id');
+
+      $.ajax({
+        url: "{% url 'add_to_cart' %}",
+        type: "POST",
+        data: {
+          'event_id': eventId,
+          'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
+        success: function(response) {
+          alert(response.message); // opcional: mostrás mensaje
+          // Actualizá el contador del carrito si usás uno
+          let cartCount = localStorage.getItem("cartCount") || 0;
+          cartCount = parseInt(cartCount) + 1;
+          localStorage.setItem("cartCount", cartCount.toString());
+        },
+        error: function(xhr, status, error) {
+          alert('Error al agregar al carrito');
+        }
+      });
+    });
+  });
+</script>
+
 
 {% endblock %}

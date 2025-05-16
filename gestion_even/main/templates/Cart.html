@@ -79,7 +79,7 @@
                 <li class="totalRow"><span class="label">Total Tickets : </span><span class="value">{{count}} Tickets</span></li>
                 <li class="totalRow final"><span class="label">Total   :  </span>{{total}} DH</li>
                 <!--<li class="totalRow"><a href="{% url 'CartCheckout' %}" class="btn continue">Checkout</a></li>-->
-                <a href="#" onclick="Check(); return false;" class="btn btn-sm btn-primary px-3 border-end" style="border-radius: 30px 0 0 30px;">Checkout</a>
+                <a href="#" onclick="sendWhatsApp(); return false;" class="btn btn-primary">Pagar por WhatsApp</a>
           </ul>
         </div>
     </div>
@@ -124,7 +124,7 @@
                                         <p class="fw-bold" style="font-size: large;">Total : </p>
                                         <p id="result" class="fw-bold" style="font-size: large;">{{total}} DH</p>
                                     </div>
-                                    <a href="/" style="text-decoration: none;"><div id="resultpay" data-event-id="{{ request.user }}" class="btn btn-primary mt-2">Pay</div></a><br>
+                                    <a href="#" id="whatsappPayBtn" class="btn btn-primary mt-2" style="text-decoration:none;">Pay via WhatsApp</a><br>
                                     <h6 style="text-align: center;">OR</h6>
                                     <a href="#" onclick="Check(); return false;" style="text-decoration: none;"><div id="resultpay" class="btn btn-primary mt-2">Cancel</div></a>
                                 </div>
@@ -197,7 +197,6 @@
 <script>
     var csrfToken = "{{ csrf_token }}";
   </script>
-  
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -235,6 +234,28 @@
   });
 });
   </script>
+
+<script id="cart-items-data" type="application/json">{{ items_json|safe }}</script>
+
+
+<script>
+ const cartItems = JSON.parse(document.getElementById('cart-items-data').textContent);
+
+function sendWhatsApp() {
+    let message = "Hola, quiero hacer la compra de los siguientes tickets:\n";
+    cartItems.forEach(function(item) {
+        message += `- ${item.eventName} | Cantidad: ${item.quantity} | Precio unitario: ${item.price} DH\n`;
+    });
+
+    const phoneNumber = '573102195212';  // Pon aquí el número destino con código país sin signos ni espacios
+    const whatsappURL = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent(message)}`;
+    window.open(whatsappURL, '_blank');
+}
+</script>
+
+
+
+
 
 </body>
 </html>

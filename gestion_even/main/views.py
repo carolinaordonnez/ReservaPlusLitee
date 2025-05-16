@@ -8,7 +8,8 @@ from django.utils.html import strip_tags
 from django import template
 from django.core.mail import send_mail
 from django.conf import settings
-
+from django.core import serializers
+import json
 
 
 # Create your views here.
@@ -22,18 +23,28 @@ def index(request,message=None):
 def UserCart(request):
     if request.user.is_authenticated:
         attendent = request.user
-        #order, created =  Order.objects.get_or_create(EventAttendet=attendent, complete=False)
-        items = Cart.objects.filter(Event_Attendet=attendent, complete=False)
+        items_qs = Cart.objects.filter(Event_Attendet=attendent, complete=False)
         total = 0
-        count = items.count()
-        for item in items:
+        count = items_qs.count()
+
+        # Calcula total
+        for item in items_qs:
             total += item.price * item.quantity
-        return render(request, 'Cart.html',{'items':items,'total':total,'count':count})
+
+        # Serializa los items como lista de diccionarios
+        items = list(items_qs.values('eventName', 'quantity', 'price'))
+        items_json = json.dumps(items)
+
+        return render(request, 'Cart.html', {
+            'items': items_qs,  # para mostrar en el HTML
+            'total': total,
+            'count': count,
+            'items_json': items_json  # para pasar al script JS
+        })
     else:
         items = []
         order = {'get_cart_items':0, 'get_cart_total':0}
-    return render(request, 'Cart.html'#,{'items':items, 'order':order}
-                  )
+        return render(request, 'Cart.html')
 
 
 def CartCheckout(request):
